@@ -15,11 +15,15 @@
 
 typedef class Enemy : public Entity {
 public:
-	Enemy():m_patroldist(), m_home() {m_properties = ENEMY;}
+	Enemy();
 	Enemy(vec2d pos, int width, int height, int patroldist);
 	virtual void update(float dt);
 	virtual ~Enemy() {}
-	virtual Enemy *clone() {return new Enemy(*this);}
+
+	void resize(const int &w, const int &h);
+
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
 protected:
 	int m_patroldist;
 	vec2d m_home;

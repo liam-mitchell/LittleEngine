@@ -62,6 +62,47 @@ void Camera::renderEntity(Entity *pEntity) {
 	}
 }
 
+bool Camera::write(std::ofstream &file) {
+	if (file.is_open()) {
+		int id = 0;
+		file << id << ' ';
+
+		file << m_pos.getX() << ' ';
+		file << m_pos.getY() << ' ';
+
+		file << std::hex << static_cast<Player *>(m_pSubject) << '\n';
+
+		return true;
+	} else return false;
+}
+
+bool Camera::read(std::ifstream &file) {
+	if (file.is_open()) {
+		unsigned int i;
+		float f;
+		file >> std::dec >> i; //read id
+
+		file >> f; //read position
+		m_pos.setX(f);
+		file >> f;
+		m_pos.setY(f);
+
+		char c = ' ';
+
+		while (c != 'x')
+			c = file.get();
+
+		file >> std::hex >> i; //read old subject pointer
+		m_pSubject = (Subject *)i;  //save it to be fixed in the fixup pass later
+
+		return true;
+	} else return false;
+}
+
+void Camera::fixup() {
+	Subject *pSubject = static_cast<Player*>(AddressTranslator::FindAddress((unsigned int)m_pSubject));
+	setSubject(pSubject);
+}
 
 bool Camera::boundCheck(int x, int y) {
 	if (x < m_pos.getX() - WIDTH / 2 || x >= m_pos.getX() + WIDTH / 2)

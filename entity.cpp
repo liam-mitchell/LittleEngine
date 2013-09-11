@@ -160,3 +160,61 @@ void Entity::resolveCollision(Entity *other) {
 		}
 	}
 }
+
+bool Entity::read(std::ifstream &file) {
+	if (!file.is_open())
+		return false;
+
+	float x;
+	float y;
+
+	file >> std::dec >> x;
+	file >> y;
+
+	m_pos.setX(x);
+	m_pos.setY(y);
+
+	file >> x;
+	file >> y;
+
+	m_vel.setX(x);
+	m_vel.setY(y);
+
+	file >> x;
+	file >> y;
+
+	m_inputvel.setX(x);
+	m_inputvel.setY(y);
+
+	file >> x;
+	file >> y;
+
+	m_accel.setX(x);
+	m_accel.setY(y);
+
+	file >> x;
+	m_properties = x;
+
+	return true;
+}
+
+bool Entity::write(std::ofstream &file) {
+	if (!file.is_open())
+		return false;
+
+	file << m_pos.getX() << ' ';
+	file << m_pos.getY() << ' ';
+
+	file << m_vel.getX() << ' ';
+	file << m_vel.getY() << ' ';
+
+	file << m_inputvel.getX() << ' ';
+	file << m_inputvel.getY() << ' ';
+
+	file << m_accel.getX() << ' ';
+	file << m_accel.getY() << ' ';
+
+	file << m_properties << ' ';
+
+	return true;
+}

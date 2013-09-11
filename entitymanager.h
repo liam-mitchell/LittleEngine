@@ -31,6 +31,9 @@ void stepEntities(float dt);
 
 void registerCreators();
 
+void serializeEntities(char *filename);
+void deserializeEntities(char *filename);
+
 Entity *createMessage(char *msg);
 
 #endif /* ENTITYMANAGER_H_ */

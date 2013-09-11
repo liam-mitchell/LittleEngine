@@ -19,7 +19,8 @@ public:
 
 	state getNextLevel() {return m_nextLevel;}
 
-	virtual Entity *clone() {return new Exit(*this);}
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
 private:
 	void fillImage();
 
@@ -28,7 +29,7 @@ private:
 
 typedef class _ExitCreator: public EntityCreator { //TODO: fix those goddamn class names
 	virtual ~_ExitCreator() {}
-	virtual Entity *create() {return new Exit;}
+	virtual Entity *create() const {return new Exit;}
 	virtual Entity *create(const vec2d &pos, const vec2d &dummy, const int &state) const;
 } Exit_Creator;
 #endif /* EXIT_H_ */

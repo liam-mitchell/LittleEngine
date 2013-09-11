@@ -85,3 +85,38 @@ void RTurret::fillImage() {
 Entity *_RTurretCreator::create(const vec2d &pos, const vec2d &dir, const int &dummy) const {
 	return new RTurret(pos, dir);
 }
+
+bool RTurret::write(std::ofstream &file) {
+	if (file.is_open()) {
+		int id = RTURRETCREATOR;
+		file << std::dec << id << ' ';
+
+		Entity::write(file);
+
+		file << std::hex << static_cast<Player *>(m_pSubject) << std::endl;
+
+		return true;
+	} else return false;
+}
+
+bool RTurret::read(std::ifstream &file) {
+	if (file.is_open()) {
+		Entity::read(file);
+
+		unsigned int i;
+		char c = ' ';
+
+		while (c != 'x')
+			c = file.get();
+
+		file >> std::hex >> i;
+		m_pSubject = (Subject *)i;
+
+		return true;
+	} else return false;
+}
+
+void RTurret::fixup() {
+	Subject *pSubject = static_cast<Player *>(AddressTranslator::FindAddress((unsigned int)m_pSubject));
+	setSubject(pSubject);
+}

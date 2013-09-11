@@ -7,6 +7,17 @@
 #include "entityfactory.h"
 #include "entitylist.h"
 
+Entity *EntityFactory::createEntity(const int &id) {
+	CreatorMap::iterator it = m_creatorMap.find(id);
+	if (it == m_creatorMap.end())
+		return NULL;
+
+	EntityCreator *pCreator = it->second;
+	Entity *pEntity = pCreator->create();
+
+	g_Entities.add(pEntity);
+	return pEntity;
+}
 
 Entity *EntityFactory::createEntity(const int &id, const vec2d &pos, const vec2d &size, const int &properties) {
 	CreatorMap::iterator it = m_creatorMap.find(id);

@@ -8,6 +8,7 @@
 #include "gamestatemanager.h"
 #include "level.h"
 #include "level2.h"
+#include "camera.h"
 
 state currentState;
 state previousState;
@@ -52,19 +53,29 @@ void GSM_Update() {
 }
 
 void GSM_Pause() {
-	Entity *pauseMsg = createMessage("Game paused - press P to resume, backspace to restart or Q to quit.");
+	Entity *pauseMsg = createMessage("Game paused - press enter to resume, backspace to restart or Q to quit.");
 	Draw();
 
 	while(1) {
 		updateInput();
-		if (gInputs.Key_P)
+		if (gInputs.Enter) {
+			gInputs.Key_P = false;
 			break;
+		}
 		else if (gInputs.Key_Q) {
 			nextState = Quit;
 			break;
 		}
 		else if (gInputs.Backspace) {
 			nextState = Restart;
+			break;
+		}
+		else if (gInputs.Key_S) {
+			serializeEntities("savefile.txt");
+			break;
+		}
+		else if (gInputs.Key_L) {
+			deserializeEntities("savefile.txt");
 			break;
 		}
 	}

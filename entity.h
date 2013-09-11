@@ -13,17 +13,18 @@
 #include "graphics.h"
 #include "entitylist.h"
 #include "properties.h"
+#include "serializable.h"
 #include <cmath>
 
 typedef class vec2d Vec2d;
 
-typedef class Entity {
+typedef class Entity: public ISerializable {
 public:
 	Entity():m_pos(), m_vel(), m_inputvel(), m_accel(), m_image(), m_properties(0) {}
 	Entity(const vec2d &pos, const vec2d &vel, const vec2d &accel, const Image &image): m_pos(pos), m_vel(vel), m_inputvel(), m_accel(accel), m_image(image), m_properties(0) {}
 	bool operator==(const Entity &src);
-	virtual Entity *clone() = 0;
 	virtual ~Entity() {}
+	virtual Entity *clone() {return new Entity(*this);}
 
 	vec2d &getPos() {return m_pos;}
 	vec2d &getVel() {return m_vel;}
@@ -49,6 +50,10 @@ public:
 	virtual void update(float dt) {}
 	virtual void draw();
 	virtual void step(float dt);
+
+	virtual bool read(std::ifstream &file);
+	virtual bool write(std::ofstream &file);
+	virtual void fixup() {}
 protected:
 	vec2d m_pos;
 	vec2d m_vel;

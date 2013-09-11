@@ -16,9 +16,12 @@ public:
 	Tile():m_width(0), m_height(0), m_center({0, 0}) {}
 	Tile(const float &width, const float &height, const vec2d &pos);
 	Tile(const float &width, const float &height, const vec2d &pos, const int& properties);
-	virtual Tile *clone() {return new Tile(*this);}
+
+	void resize(const int &w, const int &h);
 
 	virtual void step(float dt) {}
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
 private: //TODO: we don't use these anywhere, get rid of them
 	float m_width;
 	float m_height;

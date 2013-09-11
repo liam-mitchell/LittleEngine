@@ -15,7 +15,7 @@
 
 class Entity;
 
-typedef class Camera: public Observer {
+typedef class Camera: public Observer, public ISerializable {
 public:
 	Camera():m_pos(0,0) {}
 	Camera(vec2d pos, Player *target):m_pos(pos) {static_cast<Subject *>(target)->addObserver(this);}
@@ -25,6 +25,10 @@ public:
 	void resetCamera();
 
 	void renderEntity(Entity *pEntity);
+
+	bool write(std::ofstream &file);
+	bool read(std::ifstream &file);
+	void fixup();
 private:
 	vec2d m_pos;
 

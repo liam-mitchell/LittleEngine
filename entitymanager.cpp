@@ -12,7 +12,7 @@ EntityList g_Entities;
 
 void drawEntities() {
 	int num = g_Entities.getNumOfEntities();
-	for (int i = 0; i <= num; ++i) {
+	for (int i = 0; i < num; ++i) {
 		Entity *current = g_Entities.getByIndex(i);
 		if (current == NULL)
 			break;
@@ -23,7 +23,7 @@ void drawEntities() {
 
 void updateEntities(float dt) {
 	int num = g_Entities.getNumOfEntities();
-	for (int i = 0; i <= num; ++i) {
+	for (int i = 0; i < num; ++i) {
 		Entity *current = g_Entities.getByIndex(i);
 		if (current == NULL)
 			break;
@@ -34,7 +34,7 @@ void updateEntities(float dt) {
 
 void stepEntities(float dt) {
 	int num = g_Entities.getNumOfEntities();
-	for (int i = 0; i <= num; ++i) {
+	for (int i = 0; i < num; ++i) {
 		Entity *current = g_Entities.getByIndex(i);
 		if (current == NULL)
 			break;
@@ -79,5 +79,50 @@ Entity *createMessage(char *msg) {
     return message;
 }
 
+void serializeEntities(char *filename) {
+	std::ofstream file(filename);
+	g_Camera.write(file);
 
+	int num = g_Entities.getNumOfEntities();
+	for (int i = 0; i < num; ++i) {
+		Entity *current = g_Entities.getByIndex(i);
+		if (current)
+			current->write(file);
+		else
+			break;
+	}
+
+	file.close();
+}
+
+void deserializeEntities(char *filename) {
+	std::ifstream file(filename);
+	g_Entities.clear();
+	g_Camera.resetCamera();
+	g_Camera.read(file);
+
+	while (file.good()) {
+		int id;
+		file >> std::dec >> id;
+
+		if (!file.good())
+			break;
+
+		Entity *pEntity;
+		pEntity = g_Factory.createEntity(id);
+		pEntity->read(file);
+	}
+
+	g_Camera.fixup();
+	int num = g_Entities.getNumOfEntities();
+	for (int i = 0; i < num; ++i) {
+		Entity *current = g_Entities.getByIndex(i);
+		if (current)
+			current->fixup();
+		else
+			break;
+	}
+
+	file.close();
+}
 

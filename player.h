@@ -23,9 +23,11 @@ typedef class Player : public Entity, public Subject {
 public:
 	Player();
 	Player(const vec2d pos, const vec2d vel, const vec2d accel, const Image image);
-	virtual Player *clone() {return new Player(*this);}
 
 	virtual void setCanjump(bool x) {canjump = x;}
+
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
 
 	virtual void update(float dt);
 private:
@@ -34,6 +36,7 @@ private:
 
 typedef class _PlayerCreator: public EntityCreator {
 	virtual ~_PlayerCreator() {}
+	virtual Entity *create() const {return new Player;}
 	virtual Entity *create(const vec2d &pos, const vec2d &dummy1, const int &dummy2) const;
 } Player_Creator;
 

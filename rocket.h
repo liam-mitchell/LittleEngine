@@ -18,7 +18,9 @@ public:
 	Rocket(const vec2d &pos, const vec2d &direction);
 	void update(float dt);
 
-	virtual Rocket *clone() {return new Rocket(*this);}
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
+	virtual void fixup();
 private:
 	vec2d m_direction;
 
@@ -27,6 +29,7 @@ private:
 
 typedef class _RocketCreator: public EntityCreator {
 	virtual ~_RocketCreator() {};
+	virtual Entity *create() const {return new Rocket;}
 	virtual Entity *create(const vec2d &pos, const vec2d &dir, const int &dummy) const;
 } Rocket_Creator;
 

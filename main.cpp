@@ -52,6 +52,9 @@ int main() {
 				startFrame(frameStartTime);
 			}
 
+//			gInputs.Key_P = true;
+//			gInputs.Key_L = true;
+
 			if (gInputs.Backspace)
 				nextState = Restart;
 			if (gInputs.Key_Q)

@@ -55,6 +55,55 @@ Tile::Tile(const float &width, const float &height, const vec2d &pos, const int 
 	setImage(image);
 }
 
+void Tile::resize(const int &w, const int &h) {
+	CHAR chars[w * h];
+	COL colours[w * h];
+
+	if (m_properties & ENEMY) {
+		for (int i = 0; i < (w * h); ++i) {
+			chars[i] = 176;
+			colours[i] = 12;
+		}
+	} else {
+		for (int i = 0; i < (w * h); ++i) {
+			chars[i] = 219;
+			colours[i] = 8;
+		}
+	}
+
+	Image image(w, h, chars, colours);
+	setImage(image);
+}
+
+bool Tile::write(std::ofstream &file) {
+	if (file.is_open()) {
+		int id = TILECREATOR;
+		file << std::dec << id << ' ';
+		file << m_image.getWidth() << ' ';
+		file << m_image.getHeight() << ' ';
+
+		Entity::write(file);
+
+		file << std::endl;
+		return true;
+	} else return false;
+}
+
+bool Tile::read(std::ifstream &file) {
+	if (file.is_open()) {
+		int w, h;
+		file >> std::dec >> w;
+		file >> h;
+
+		Entity::read(file);
+		file.get();
+
+		resize(w, h);
+
+		return true;
+	} else return false;
+}
+
 Entity *_TileCreator::create(const vec2d &pos, const vec2d &size, const int &properties) const {
 	Entity *entity = new Tile(size.getX(), size.getY(), pos, properties);
 	return entity;

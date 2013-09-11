@@ -17,9 +17,11 @@ typedef class Bullet: public Entity {
 public:
 	Bullet();
 	Bullet(const vec2d &pos, const vec2d &vel);
-	virtual Bullet *clone() {return new Bullet(*this);}
 
 	void update(float dt);
+
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
 private:
 	void fillImage();
 
@@ -29,6 +31,7 @@ private:
 typedef class _BulletCreator: public EntityCreator {
 public:
 	virtual ~_BulletCreator() {}
+	virtual Entity *create() const {return new Bullet;}
 	virtual Entity *create(const vec2d &pos, const vec2d &vel, const int &dummy) const;
 } Bullet_Creator;
 

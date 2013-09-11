@@ -18,6 +18,32 @@ Exit::Exit(const vec2d &pos, const state &nextLevel):m_nextLevel(nextLevel) {
 	fillImage();
 }
 
+bool Exit::write(std::ofstream &file) {
+	if (file.is_open()) {
+		int id = EXITCREATOR;
+		file << std::dec << id << ' ';
+
+		Entity::write(file);
+
+		file << m_nextLevel << std::endl;
+
+		return true;
+	} else return false;
+}
+
+bool Exit::read(std::ifstream &file) {
+	if (file.is_open()) {
+		Entity::read(file);
+
+		unsigned int i;
+		file >> std::dec >> i;
+
+		m_nextLevel = i;
+
+		return true;
+	} else return false;
+}
+
 void Exit::fillImage() {
 	CHAR chars[12];
 	COL colours[12];

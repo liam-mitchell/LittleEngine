@@ -6,13 +6,30 @@
  */
 
 #include "player.h"
+#include <iomanip>
 
 Player::Player() {
 	m_pos.setX(0);
 	m_pos.setY(0);
 	m_vel.setX(0);
 	m_vel.setY(0);
-	m_image = NULL;
+
+	CHAR chars[9];
+	COL colours[9];
+
+	chars = {
+			60, 153, 62,
+			184, 215, 213,
+			220, 202, 220
+	};
+
+	for (int i = 0; i < 9; ++i) {
+		colours[i] = 15 | BACKGROUND_BLUE;
+	}
+
+	Image image(3, 3, chars, colours);
+
+	m_image = image;
 	m_properties = PLAYER;
 	canjump = true;
 }
@@ -53,6 +70,46 @@ void Player::update(float dt) {
 		canjump = true;
 	}
 }
+
+bool Player::write(std::ofstream &file) {
+	if (!file.is_open())
+		return false;
+
+	int id = PLAYERCREATOR; //write id and old address to file first
+	file << std::dec << id << ' ';
+	file << std::hex << this << ' ';
+
+	Entity::write(file); //write all basic entity data
+
+	file << canjump << '\n'; //player-specific data
+
+	return true;
+}
+
+bool Player::read(std::ifstream &file) {
+	if (!file.is_open())
+		return false;
+
+	int i;
+	unsigned int u;
+
+	char c = ' ';
+
+	while (c != 'x') {
+		c = file.get();
+	}
+
+	file >> std::hex >> u; //read old address
+	AddressTranslator::AddAddress(u, this); //add to the address table for fixup later
+
+	Entity::read(file); //read basic entity data
+
+	file >> canjump; //player-specific data
+
+	return true;
+}
+
+//void Player::fixup() {}
 
 Entity *_PlayerCreator::create(const vec2d &pos, const vec2d &dummy1, const int &dummy2) const {
 	CHAR chars[9];

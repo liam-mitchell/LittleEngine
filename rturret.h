@@ -13,10 +13,14 @@
 
 typedef class RTurret: public Entity, public Observer {
 public:
+	RTurret():m_timer(0), m_direction({1, 0}) {}
 	RTurret(const vec2d &pos, const vec2d &dir);
-	virtual RTurret *clone() {return new RTurret(*this);}
 
 	virtual void update(float dt);
+
+	virtual bool write(std::ofstream &file);
+	virtual bool read(std::ifstream &file);
+	virtual void fixup();
 private:
 	void fillImage();
 
@@ -26,6 +30,7 @@ private:
 
 typedef class _RTurretCreator: public EntityCreator {
 	virtual ~_RTurretCreator() {}
+	virtual Entity *create() const {return new RTurret;}
 	virtual Entity *create(const vec2d &pos, const vec2d &dir, const int &dummy) const;
 } RTurret_Creator;
 

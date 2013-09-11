@@ -28,6 +28,29 @@ void Bullet::update(float dt) {
 		g_Entities.remove(*this);
 }
 
+bool Bullet::write(std::ofstream &file) {
+	if (file.is_open()) {
+		int id = BULLETCREATOR;
+		file << std::dec << id << ' ';
+
+		Entity::write(file);
+
+		file << m_timer << std::endl;
+
+		return true;
+	} else return false;
+}
+
+bool Bullet::read(std::ifstream &file) {
+	if (file.is_open()) {
+		Entity::read(file);
+
+		file >> std::dec >> m_timer;
+
+		return true;
+	} else return false;
+}
+
 void Bullet::fillImage() {
 	CHAR chars[1];
 	COL colours[1];
