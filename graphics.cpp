@@ -28,6 +28,15 @@ void writeBackground(CHAR_INFO * buffer) {
 	write_image_to_buffer(buffer, cloud_image, 5, 5);
 }
 
+void clearBackground(CHAR_INFO *buffer) {
+	for (int y = 0; y < HEIGHT; ++y) {
+		for (int x = 0; x < WIDTH; ++x) {
+			buffer[x + WIDTH * y].Char.AsciiChar = (unsigned char)219;
+			buffer[x + WIDTH * y].Attributes = 0;
+		}
+	}
+}
+
 /***************************************************************************
  * write_image_to_buffer
  *

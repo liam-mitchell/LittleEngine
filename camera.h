@@ -24,7 +24,11 @@ public:
 	void initCamera(const vec2d &pos, Player *target);
 	void resetCamera();
 
+	void move(vec2d dist) {m_pos += dist;}
+	vec2d &getPos() {return m_pos;}
+
 	void renderEntity(Entity *pEntity);
+	void writeString(char *txt, vec2d pos);
 
 	bool write(std::ofstream &file);
 	bool read(std::ifstream &file);

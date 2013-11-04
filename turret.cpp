@@ -82,6 +82,16 @@ void Turret::fillImage() {
 	m_image = image;
 }
 
+void Turret::rotate() {
+	if (m_direction.getX() == -1) {
+		m_direction.setX(1);
+	} else {
+		m_direction.setX(-1);
+	}
+
+	fillImage();
+}
+
 Entity *_TurretCreator::create(const vec2d &pos, const vec2d &dir, const int &dummy) const {
 	return new Turret(pos, dir);
 }

@@ -7,6 +7,7 @@
 #include "entity.h"
 #include "gamestatemanager.h"
 #include "exit.h"
+#include "camera.h"
 
 void createMessage(char *msg);
 
@@ -98,6 +99,12 @@ void Entity::step(float dt) {
 
 	data.rect.center.x = m_pos.getX();
 	data.rect.center.y = stepY(dt);
+	data.dist = 0;
+
+	if (data.other) {
+		resolveCollision(data.other);
+		data.other = NULL;
+	}
 
 	for (i = 0; i < num; ++i) {
 		Entity *other = g_Entities.getByIndex(i);
@@ -116,6 +123,7 @@ void Entity::step(float dt) {
 			}
 		}
 	}
+
 	if (data.y == true) {
 		if (m_vel.getY() + m_inputvel.getY() > 0) {
 			m_pos.setY(data.other->m_pos.getY() - (float)data.other->m_image.getHeight() / 2 - (float)m_image.getHeight() / 2);
@@ -134,10 +142,12 @@ void Entity::step(float dt) {
 }
 
 void Entity::resolveCollision(Entity *other) {
+
+	vec2d msgpos(0, 0);
 	if (m_properties & PLAYER) {
 		if ((other->m_properties & PROJECTILE) || (other->m_properties & ENEMY)) {
 			g_Entities.remove(*this);
-			createMessage("You died! Press backspace to restart, or Q to quit.");
+			g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
 			return;
 		} else if (other->m_properties & EXIT) {
 			nextState = static_cast<Exit *>(other)->getNextLevel();
@@ -146,7 +156,7 @@ void Entity::resolveCollision(Entity *other) {
 	} else if (m_properties & PROJECTILE) {
 		if (other->m_properties & PLAYER) {
 			g_Entities.remove(*other);
-			createMessage("You died! Press backspace to restart, or Q to quit.");
+			g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
 		}
 
 		g_Entities.remove(*this);
@@ -155,7 +165,7 @@ void Entity::resolveCollision(Entity *other) {
 	} else if (m_properties & ENEMY) {
 		if (other->m_properties & PLAYER) {
 			g_Entities.remove(*other);
-			createMessage("You died! Press backspace to restart, or Q to quit.");
+			g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
 			return;
 		}
 	}

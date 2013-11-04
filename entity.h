@@ -54,6 +54,7 @@ public:
 	virtual bool read(std::ifstream &file);
 	virtual bool write(std::ofstream &file);
 	virtual void fixup() {}
+	virtual void rotate() {}
 protected:
 	vec2d m_pos;
 	vec2d m_vel;

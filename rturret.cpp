@@ -106,11 +106,13 @@ bool RTurret::read(std::ifstream &file) {
 		unsigned int i;
 		char c = ' ';
 
-		while (c != 'x')
+		while (c != 'x' && c != '\n')
 			c = file.get();
 
-		file >> std::hex >> i;
-		m_pSubject = (Subject *)i;
+		if (c != '\n') {
+			file >> std::hex >> i;
+			m_pSubject = (Subject *)i;
+		}
 
 		return true;
 	} else return false;

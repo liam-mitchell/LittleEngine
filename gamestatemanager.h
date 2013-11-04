@@ -11,8 +11,11 @@
 typedef unsigned int state;
 
 typedef enum {
+	Menu,
 	Level,
 	Level2,
+	Editor,
+	EditorLevel,
 	Restart,
 	Quit
 } stateList;

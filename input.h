@@ -100,7 +100,9 @@ typedef struct {
 	bool Shift;
 	bool Enter;
 	bool L_Button; // Mouse
-	bool R_Button; // Mouse
+	bool L_isHeld;
+	bool R_Button;
+	bool R_isHeld;// Mouse
 	int xPos; // Mouse (within window)
 	int yPos; // Mouse (within window)
 	int xPosAtLastLeftClick; // x position of cursor relative to draw area during last left or right click

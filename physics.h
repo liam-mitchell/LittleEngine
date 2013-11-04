@@ -27,6 +27,7 @@ typedef struct rect_manifold {
 	Entity *other;
 } r_manifold;
 
+bool pointRectCollide(vec2d a, physRect b);
 bool aabbCollide(physRect a, physRect b);
 float point2dDistance(point2d a, point2d b);
 float point2dSquaredDistance(point2d a, point2d b);

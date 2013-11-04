@@ -49,7 +49,12 @@ void EntityList::remove(const Entity &data) {
 	EntityNode *currNode = m_head;
 	if (*(currNode->data) == data) {
 		m_head = currNode->next;
-		m_head->prev = NULL;
+
+		if (m_head)
+			m_head->prev = NULL;
+		else
+			m_tail = NULL;
+
 		delete currNode->data;
 		delete currNode;
 		--m_numOfEntities;

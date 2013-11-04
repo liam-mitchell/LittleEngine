@@ -20,6 +20,8 @@ public:
 
 	virtual bool write(std::ofstream &file);
 	virtual bool read(std::ifstream &file);
+
+	virtual void rotate();
 private:
 	void fillImage();
 

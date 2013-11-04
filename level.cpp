@@ -54,6 +54,7 @@ void levelInitialize() {
 void levelUpdate() {
 	float dt = dtCalc();
 	updateInput();
+	gInputs.Arrow_Right = true;
 	updateEntities(dt);
 	stepEntities(dt);
 	g_Camera.update();

@@ -20,20 +20,42 @@ DWORD updateInput() {
 		eventBuffer = new INPUT_RECORD[num_events];
 		ReadConsoleInput(rHnd, eventBuffer, num_events, &num_events_read);
 
+		if (gInputs.R_Button == true) {
+			gInputs.R_isHeld = true;
+		}
+
+		if (gInputs.L_Button == true) {
+			gInputs.L_isHeld = true;
+		}
+
 		for (DWORD i = 0; i < num_events_read; ++i) {
 			switch (eventBuffer[i].EventType) {
 			case MOUSE_EVENT:
 				offsetx = eventBuffer[i].Event.MouseEvent.dwMousePosition.X;
 				offsety = eventBuffer[i].Event.MouseEvent.dwMousePosition.Y;
 				if (eventBuffer[i].Event.MouseEvent.dwButtonState == FROM_LEFT_1ST_BUTTON_PRESSED) {
+					if (gInputs.xPosAtLastLeftClick != offsetx || gInputs.yPosAtLastLeftClick != offsety) {
+						gInputs.L_isHeld = false;
+					}
+
 					gInputs.xPosAtLastLeftClick = offsetx;
 					gInputs.yPosAtLastLeftClick = offsety;
 					gInputs.L_Button = true;
 				}
 				else if (eventBuffer[i].Event.MouseEvent.dwButtonState == RIGHTMOST_BUTTON_PRESSED) {
+					if (gInputs.xPosAtLastRightClick != offsetx || gInputs.yPosAtLastRightClick != offsety) {
+						gInputs.R_isHeld = false;
+					}
+
 					gInputs.xPosAtLastRightClick = offsetx;
 					gInputs.yPosAtLastRightClick = offsety;
 					gInputs.R_Button = true;
+				}
+				else {
+					gInputs.L_Button = false;
+					gInputs.R_Button = false;
+					gInputs.L_isHeld = false;
+					gInputs.R_isHeld = false;
 				}
 				break;
 			case KEY_EVENT:

@@ -26,7 +26,8 @@ void Camera::update() {
 
 void Camera::initCamera(const vec2d &pos, Player *target) {
 	m_pos = pos;
-	setSubject(static_cast<Subject *>(target));
+	if (target)
+		setSubject(static_cast<Subject *>(target));
 }
 
 void Camera::resetCamera() {
@@ -62,6 +63,19 @@ void Camera::renderEntity(Entity *pEntity) {
 	}
 }
 
+void Camera::writeString(char *txt, vec2d pos) {
+	char c = 'a';
+	int x = pos.getX();
+	int y = pos.getY();
+
+	for (int i = 0; c != '\0'; ++i) {
+		c = txt[i];
+		backgroundBuffer[x + WIDTH * y].Char.AsciiChar = c;
+		backgroundBuffer[x + WIDTH * y].Attributes = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED;
+		++x;
+	}
+}
+
 bool Camera::write(std::ofstream &file) {
 	if (file.is_open()) {
 		int id = 0;
@@ -89,11 +103,13 @@ bool Camera::read(std::ifstream &file) {
 
 		char c = ' ';
 
-		while (c != 'x')
+		while (c != 'x' && c != '\n')
 			c = file.get();
 
-		file >> std::hex >> i; //read old subject pointer
-		m_pSubject = (Subject *)i;  //save it to be fixed in the fixup pass later
+		if (c != '\n') {
+			file >> std::hex >> i; //read old subject pointer
+			m_pSubject = (Subject *)i;  //save it to be fixed in the fixup pass later
+		}
 
 		return true;
 	} else return false;

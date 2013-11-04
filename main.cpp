@@ -25,7 +25,8 @@ int main() {
 
 	registerCreators();
 
-	GSM_Init(Level);
+	GSM_Init(Menu);
+	gInputs.Key_P = true;
 
 	while (currentState != Quit) {
 
@@ -51,9 +52,6 @@ int main() {
 				Draw();
 				startFrame(frameStartTime);
 			}
-
-//			gInputs.Key_P = true;
-//			gInputs.Key_L = true;
 
 			if (gInputs.Backspace)
 				nextState = Restart;

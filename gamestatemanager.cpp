@@ -6,9 +6,12 @@
  */
 
 #include "gamestatemanager.h"
+#include "menu.h"
 #include "level.h"
 #include "level2.h"
 #include "camera.h"
+#include "editor.h"
+#include "editorlevel.h"
 
 state currentState;
 state previousState;
@@ -29,6 +32,14 @@ void GSM_Init(state initState) {
 
 void GSM_Update() {
 	switch(currentState) {
+	case Menu:
+		Load = &menuLoad;
+		Initialize = &menuInitialize;
+		Update = &menuUpdate;
+		Draw = &menuDraw;
+		Free = &menuFree;
+		Unload = &menuUnload;
+		break;
 	case Level:
 		Load = &levelLoad;
 		Initialize = &levelInitialize;
@@ -44,6 +55,22 @@ void GSM_Update() {
 		Draw = &level2Draw;
 		Free = &level2Free;
 		Unload = &level2Unload;
+		break;
+	case Editor:
+		Load = &editorLoad;
+		Initialize = &editorInitialize;
+		Update = &editorUpdate;
+		Draw = &editorDraw;
+		Free = &editorFree;
+		Unload = &editorUnload;
+		break;
+	case EditorLevel:
+		Load = &edLevelLoad;
+		Initialize = &edLevelInitialize;
+		Update = &edLevelUpdate;
+		Draw = &edLevelDraw;
+		Free = &edLevelFree;
+		Unload = &edLevelUnload;
 		break;
 	case Restart:
 		break;

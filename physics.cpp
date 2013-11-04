@@ -30,4 +30,10 @@ bool aabbCollide(physRect a, physRect b) {
 	return true;
 }
 
-
+bool pointRectCollide(vec2d a, physRect b) {
+	if (a.getX() < b.center.x - b.xHalfwidth) return false;
+	if (a.getX() > b.center.x + b.xHalfwidth) return false;
+	if (a.getY() < b.center.y - b.yHalfwidth) return false;
+	if (a.getY() > b.center.y + b.yHalfwidth) return false;
+	return true;
+}

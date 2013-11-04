@@ -17,6 +17,7 @@ enum { DRAW, NODRAW, QUIT };
 extern CHAR_INFO backgroundBuffer[WIDTH * HEIGHT];
 
 void writeBackground(CHAR_INFO * buffer);
+void clearBackground(CHAR_INFO *buffer);
 void write_image_to_buffer(CHAR_INFO buffer[], Image &image, int x_offset, int y_offset);
 int getEvents();
 void copyBuffer(CHAR_INFO *buffer1, CHAR_INFO *buffer2);
