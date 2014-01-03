@@ -30,6 +30,8 @@ public:
 	void renderEntity(Entity *pEntity);
 	void writeString(char *txt, vec2d pos);
 
+	Entity *target() {return (Entity *)m_pSubject;}
+
 	bool write(std::ofstream &file);
 	bool read(std::ifstream &file);
 	void fixup();

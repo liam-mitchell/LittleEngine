@@ -26,7 +26,6 @@ int main() {
 	registerCreators();
 
 	GSM_Init(Menu);
-	gInputs.Key_P = true;
 
 	while (currentState != Quit) {
 

@@ -11,7 +11,10 @@
 #include "entity.h"
 
 void Camera::update() {
-	if (m_pSubject == NULL) return;
+	if (m_pSubject == NULL) {
+		writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
+		return;
+	}
 
 	if (m_pos.getX() - WIDTH / 2 > static_cast<Player *>(m_pSubject)->getPos().getX())
 		m_pos.setX(m_pos.getX() - WIDTH);
