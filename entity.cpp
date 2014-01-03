@@ -102,7 +102,7 @@ void Entity::step(float dt) {
 	data.dist = 0;
 
 	if (data.other) {
-		resolveCollision(data.other);
+		if (resolveCollision(data.other)) return;
 		data.other = NULL;
 	}
 
@@ -141,14 +141,14 @@ void Entity::step(float dt) {
 		resolveCollision(data.other);
 }
 
-void Entity::resolveCollision(Entity *other) {
+bool Entity::resolveCollision(Entity *other) {
 
 	vec2d msgpos(0, 0);
 	if (m_properties & PLAYER) {
 		if ((other->m_properties & PROJECTILE) || (other->m_properties & ENEMY)) {
 			g_Entities.remove(*this);
 			g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
-			return;
+			return true;
 		} else if (other->m_properties & EXIT) {
 			nextState = static_cast<Exit *>(other)->getNextLevel();
 		}
@@ -160,15 +160,16 @@ void Entity::resolveCollision(Entity *other) {
 		}
 
 		g_Entities.remove(*this);
-		return;
+		return true;
 
 	} else if (m_properties & ENEMY) {
 		if (other->m_properties & PLAYER) {
 			g_Entities.remove(*other);
 			g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
-			return;
 		}
 	}
+
+	return false;
 }
 
 bool Entity::read(std::ifstream &file) {

@@ -63,7 +63,7 @@ protected:
 	Image m_image;
 	int m_properties;
 
-	void resolveCollision(Entity *other);
+	bool resolveCollision(Entity *other);
 } Entity_s;
 
 

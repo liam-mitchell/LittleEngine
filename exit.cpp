@@ -45,20 +45,19 @@ bool Exit::read(std::ifstream &file) {
 }
 
 void Exit::fillImage() {
-	CHAR chars[12];
-	COL colours[12];
-
-	chars = {
+	CHAR chars[12] = {
 			255, 205, 205, 255,
 			186, 178, 178, 186,
 			186, 178, 178, 186
 	};
 
-	colours = {
+	COL colours[12] = {
 			0, 0, 0, 0,
 			0, 15, 15, 0,
 			0, 15, 15, 0
 	};
+
+
 
 	for (int i = 0; i < 12; ++i) {
 		colours[i] |= BACKGROUND_BLUE;

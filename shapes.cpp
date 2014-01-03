@@ -27,6 +27,7 @@ Image::Image(const int w, const int h, const CHAR *chrs, const COL *cols) :width
 Image::Image(const Image &src) {
 	width = src.width;
 	height = src.height;
+
 	chars = new CHAR[width * height];
 	colours = new COL[width * height];
 	for (int i = 0; i < width * height; ++i) {
@@ -36,14 +37,15 @@ Image::Image(const Image &src) {
 }
 
 Image::~Image() {
-	delete [] chars;
-	delete [] colours;
+	if (chars) delete [] chars;
+	if (colours) delete [] colours;
 }
 
 Image &Image::operator=(const Image &src) {
 	if (this != &src) {
 		if (chars) delete [] chars;
 		if (colours) delete [] colours;
+
 		width = src.width;
 		height = src.height;
 		chars = new CHAR[width * height];

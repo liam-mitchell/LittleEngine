@@ -14,6 +14,7 @@
 #include "entity.h"
 #include "observer.h"
 #include "entitycreator.h"
+#include "animation.h"
 
 #define PLAYER_LEFT_RIGHT_SPEED 30.f
 #define PLAYER_JUMP_SPEED -90.f
@@ -32,6 +33,7 @@ public:
 	virtual void update(float dt);
 private:
 	bool canjump;
+	Animation m_animation;
 } Player_s;
 
 typedef class _PlayerCreator: public EntityCreator {

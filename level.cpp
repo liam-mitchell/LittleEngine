@@ -12,7 +12,7 @@
 #include "gamestatemanager.h"
 
 void levelLoad() {
-	g_pPlayer = static_cast<Player *>(g_Factory.createEntity(PLAYERCREATOR, {1.5, HEIGHT - 1.5}, {0, 0}, 0));
+	g_pPlayer = static_cast<Player *>(g_Factory.createEntity(PLAYERCREATOR, {18, HEIGHT - 25}, {0, 0}, 0));
 	g_Factory.createEntity(TILECREATOR, {10, HEIGHT - 7.5}, {10, 5}, 0);
 	g_Factory.createEntity(TILECREATOR, {7, HEIGHT - 15.5}, {6, 3}, 0);
 	g_Factory.createEntity(TILECREATOR, {23, HEIGHT - 20.5}, {12, 3}, 0);
@@ -54,7 +54,7 @@ void levelInitialize() {
 void levelUpdate() {
 	float dt = dtCalc();
 	updateInput();
-	gInputs.Arrow_Right = true;
+//	gInputs.Arrow_Right = true;
 	updateEntities(dt);
 	stepEntities(dt);
 	g_Camera.update();

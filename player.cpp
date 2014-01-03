@@ -14,17 +14,16 @@ Player::Player() {
 	m_vel.setX(0);
 	m_vel.setY(0);
 
-	CHAR chars[9];
-	COL colours[9];
-
-	chars = {
-			60, 153, 62,
-			184, 215, 213,
-			220, 202, 220
+	CHAR chars[9] = {
+			255, 187, 255,
+			255, 215, 255,
+			187, 215, 187
 	};
 
+	COL colours[9];
+
 	for (int i = 0; i < 9; ++i) {
-		colours[i] = 15 | BACKGROUND_BLUE;
+		colours[i] = 15 | BACKGROUND_RED;
 	}
 
 	Image image(3, 3, chars, colours);
@@ -34,7 +33,7 @@ Player::Player() {
 	canjump = true;
 }
 
-Player::Player(const vec2d pos, const vec2d vel, const vec2d accel, const Image image) :canjump(false) {
+Player::Player(const vec2d pos, const vec2d vel, const vec2d accel, const Image image) :canjump(false), m_animation(PLAYER_LEFT_ANIMATION) {
 	setPos(pos);
 	setVel(vel);
 	setAccel(accel); //TODO: we don't use this variable anywhere, remove from base entity class
@@ -44,13 +43,21 @@ Player::Player(const vec2d pos, const vec2d vel, const vec2d accel, const Image 
 
 void Player::update(float dt) {
 	if (gInputs.Arrow_Right) {
+		if (m_inputvel.getX() + m_vel.getX() <= 0) {
+			m_animation = PLAYER_RIGHT_ANIMATION;
+		}
 		m_inputvel.setX(PLAYER_LEFT_RIGHT_SPEED);
 	}
 	if (gInputs.Arrow_Left) {
+		if (m_inputvel.getX() + m_vel.getX() >= 0) {
+			m_animation = PLAYER_LEFT_ANIMATION;
+		}
 		m_inputvel.setX(-PLAYER_LEFT_RIGHT_SPEED);
 	}
-	else if (!(gInputs.Arrow_Right || gInputs.Arrow_Left))
+	else if (!(gInputs.Arrow_Right || gInputs.Arrow_Left)) {
 		m_inputvel.setX(0);
+		m_animation = PLAYER_RIGHT_ANIMATION;
+	}
 
 	if (canjump && gInputs.Arrow_Up) {
 		m_vel.setY(-sqrt(2.f * GRAVITY * PLAYER_JUMP_HEIGHT));
@@ -61,14 +68,16 @@ void Player::update(float dt) {
 	m_vel += accel * dt;
 
 
-//	if (m_pos.getX() < 1.5) m_pos.setX(1.5);
 	if (m_pos.getY() < 1.5) m_pos.setY(1.5);
-//	if (m_pos.getX() > WIDTH - 1.5) m_pos.setX(WIDTH - 1.5);
 	if (m_pos.getY() > HEIGHT - 1.5) {
 		m_pos.setY(HEIGHT - 1.5);
 		m_vel.setY(0);
 		canjump = true;
 	}
+
+	m_image = m_animation.getImage();
+
+	m_animation.update(dt);
 }
 
 bool Player::write(std::ofstream &file) {
@@ -90,7 +99,6 @@ bool Player::read(std::ifstream &file) {
 	if (!file.is_open())
 		return false;
 
-	int i;
 	unsigned int u;
 
 	char c = ' ';
@@ -112,14 +120,13 @@ bool Player::read(std::ifstream &file) {
 //void Player::fixup() {}
 
 Entity *_PlayerCreator::create(const vec2d &pos, const vec2d &dummy1, const int &dummy2) const {
-	CHAR chars[9];
-	COL colours[9];
-
-	chars = {
-			60, 153, 62,
-			184, 215, 213,
-			220, 202, 220
+	CHAR chars[9] = {
+			255, 187, 255,
+			255, 254, 255,
+			187, 254, 187
 	};
+
+	COL colours[9];
 
 	for (int i = 0; i < 9; ++i) {
 		colours[i] = 15 | BACKGROUND_BLUE;
