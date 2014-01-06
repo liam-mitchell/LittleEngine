@@ -33,6 +33,10 @@ void menuUpdate() {
 }
 
 void menuDraw() {
+	for (int i = 0; i < WIDTH * HEIGHT; ++i) {
+		backgroundBuffer[i].Char.AsciiChar = ' ';
+		backgroundBuffer[i].Attributes = 0;
+	}
 	vec2d pos(0, 0);
 	g_Camera.writeString("Welcome to the Little Engine That Could!", pos);
 
@@ -47,6 +51,9 @@ void menuDraw() {
 
 	pos.setY(6);
 	g_Camera.writeString("	Q: Quit the engine demo", pos);
+
+	pos.setY(8);
+	g_Camera.writeString("Press escape to return to this menu at any time.", pos);
 
 	copyBuffer(consoleBuffer, backgroundBuffer);
 	WriteConsoleOutputA(wHnd, consoleBuffer, characterBufferSize, characterPosition, &consoleWriteArea);

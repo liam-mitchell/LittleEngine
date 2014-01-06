@@ -6,22 +6,24 @@
  */
 
 #include "level2.h"
-#include "entityfactory.h"
 #include "camera.h"
-#include "properties.h"
 #include "entitymanager.h"
-#include "player.h"
 
 void level2Load() {
-//	g_PlayerImage = {RECTW, RECTH, WhtRectangle.chars, WhtRectangle.colours};
-//	g_Player = {{1.5, HEIGHT - 1.5}, {0, 0}, {0, 0}, g_PlayerImage};
-	g_pPlayer = static_cast<Player *>(g_Factory.createEntity(PLAYERCREATOR, {1.5, HEIGHT - 1.5}, {0, 0}, 0));
-//	g_Entities.add(g_pPlayer);
+	deserializeEntities("level2.txt");
 }
 
 void level2Initialize() {
 	InitFrameRateController();
 	startFrame(frameStartTime);
+
+	for (int i = 0; i < g_Entities.getNumOfEntities(); ++i) {
+		Entity *current = g_Entities.getByIndex(i);
+		if (current->getProperties() & PLAYER) {
+			g_pPlayer = static_cast<Player *>(current);
+		}
+	}
+
 	g_Camera.initCamera({WIDTH / 2, HEIGHT / 2}, g_pPlayer);
 
 	writeBackground(consoleBuffer);

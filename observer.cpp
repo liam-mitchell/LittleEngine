@@ -22,7 +22,7 @@ void Observer::setSubject(Subject *pSubj) {
 Subject::~Subject() {
 	ObsList::iterator it;
 	for (it = m_observers.begin(); it != m_observers.end(); ++it) {
-		(*it)->setSubject(NULL);
+		(*it)->setSubject(0);
 	}
 }
 
@@ -34,7 +34,7 @@ void Subject::removeObserver(Observer *pObs) {
 	ObsList::iterator it;
 	for (it = m_observers.begin(); it != m_observers.end(); ++it) {
 		if ((*it) == pObs) {
-			(*it)->setSubject(NULL);
+			(*it)->setSubject(0);
 			m_observers.erase(it);
 			return;
 		}

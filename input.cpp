@@ -196,6 +196,9 @@ DWORD updateInput() {
 					case VK_9:
 						gInputs.Key_9 = true;
 						break;
+					case VK_ESCAPE:
+						gInputs.Key_Escape = true;
+						break;
 					}
 				}
 				else {
@@ -334,6 +337,9 @@ DWORD updateInput() {
 					  break;
 					case VK_9:
 					  gInputs.Key_9 = false;
+					  break;
+					case VK_ESCAPE:
+					  gInputs.Key_Escape = false;
 					  break;
 				}
 			}

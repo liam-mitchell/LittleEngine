@@ -20,7 +20,7 @@ void drawEntities() {
 			g_Camera.renderEntity(current);
 	}
 
-	if (!g_Camera.target()) g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
+	if (!g_Camera.target() && currentState != Editor) g_Camera.writeString("You died! Press backspace to restart, or Q to quit.", {0, 0});
 }
 
 void updateEntities(float dt) {

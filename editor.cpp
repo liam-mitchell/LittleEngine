@@ -115,7 +115,7 @@ void editorUpdate() {
 	}
 
 	if (gInputs.R_Button && !gInputs.R_isHeld) {
-		vec2d pos(gInputs.xPosAtLastRightClick + 1, gInputs.yPosAtLastRightClick + 1);
+		vec2d pos(gInputs.xPosAtLastRightClick + g_Camera.getPos().getX() - WIDTH / 2 + 1, gInputs.yPosAtLastRightClick + g_Camera.getPos().getY() - HEIGHT / 2 + 1);
 		int num = g_Entities.getNumOfEntities();
 		int i;
 		for (i = 0; i < num; ++i) {
@@ -133,6 +133,12 @@ void editorUpdate() {
 
 	if (gInputs.Key_L) {
 		deserializeEntities("editorsavefile.txt");
+		for (int i = 0; i < g_Entities.getNumOfEntities(); ++i) {
+			Entity *entity = g_Entities.getByIndex(i);
+			if (entity->getProperties() & PLAYER) {
+				g_pPlayer = static_cast<Player *>(entity);
+			}
+		}
 	}
 
 	if (gInputs.Key_T) {

@@ -9,7 +9,7 @@
 #include "entityfactory.h"
 #include "player.h"
 
-RTurret::RTurret(const vec2d &pos, const vec2d &dir):m_direction(dir.normalize()), m_timer(3) {
+RTurret::RTurret(const vec2d &pos, const vec2d &dir):m_direction(dir.normalize()), m_timer(1.5) {
 	m_pos = pos;
 	fillImage();
 }
@@ -113,6 +113,8 @@ bool RTurret::read(std::ifstream &file) {
 			file >> std::hex >> i;
 			m_pSubject = (Subject *)i;
 		}
+
+		fillImage();
 
 		return true;
 	} else return false;

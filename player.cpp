@@ -67,8 +67,6 @@ void Player::update(float dt) {
 	vec2d accel(0, GRAVITY);
 	m_vel += accel * dt;
 
-
-	if (m_pos.getY() < 1.5) m_pos.setY(1.5);
 	if (m_pos.getY() > HEIGHT - 1.5) {
 		m_pos.setY(HEIGHT - 1.5);
 		m_vel.setY(0);

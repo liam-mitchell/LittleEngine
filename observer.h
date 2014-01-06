@@ -14,7 +14,7 @@ class Subject;
 
 class Observer {
 public:
-	Observer():m_pSubject(NULL) {}
+	Observer():m_pSubject(0) {}
 	virtual ~Observer();
 	void setSubject(Subject *pSubj);
 protected:

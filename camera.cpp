@@ -9,6 +9,7 @@
 #include "graphics.h"
 #include "properties.h"
 #include "entity.h"
+#include <cmath>
 
 void Camera::update() {
 	if (m_pSubject == NULL) {
@@ -124,9 +125,9 @@ void Camera::fixup() {
 }
 
 bool Camera::boundCheck(int x, int y) {
-	if (x < m_pos.getX() - WIDTH / 2 || x >= m_pos.getX() + WIDTH / 2)
+	if (x <= m_pos.getX() - WIDTH / 2 + 1|| x >= m_pos.getX() + WIDTH / 2 - 1)
 		return false;
-	if (y < m_pos.getY() - HEIGHT / 2 || y >= m_pos.getY() + HEIGHT / 2)
+	if (y <= m_pos.getY() - HEIGHT / 2 + 1|| y >= m_pos.getY() + HEIGHT / 2 - 1)
 		return false;
 	return true;
 }

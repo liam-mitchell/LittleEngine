@@ -91,6 +91,7 @@ typedef struct {
 	bool Key_Space;
 	bool Key_Ctrl;
 	bool Key_Shift;
+	bool Key_Escape;
 	bool Arrow_Up;
 	bool Arrow_Left;
 	bool Arrow_Down;

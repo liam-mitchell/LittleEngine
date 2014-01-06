@@ -80,12 +80,14 @@ void GSM_Update() {
 }
 
 void GSM_Pause() {
-	Entity *pauseMsg = createMessage("Game paused - press enter to resume, backspace to restart or Q to quit.");
+	Entity *pauseMsg = createMessage("Game paused. Controls: P: resume, backspace: restart, Q: quit, S: save, L: load");
 	Draw();
+
+	gInputs.Key_P = false;
 
 	while(1) {
 		updateInput();
-		if (gInputs.Enter) {
+		if (gInputs.Key_P) {
 			gInputs.Key_P = false;
 			break;
 		}

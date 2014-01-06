@@ -20,7 +20,7 @@ Turret::Turret(const vec2d &pos, const vec2d &dir):m_timer(3), m_direction(dir) 
 void Turret::update(float dt) {
 	m_timer += dt;
 	if (m_timer > 3) {
-		vec2d pos(m_pos.getX() - 3.5, m_pos.getY());
+		vec2d pos(m_pos.getX() + m_direction.getX() * 3.5, m_pos.getY());
 		vec2d vel(m_direction.normalize() * 15);
 		g_Factory.createEntity(BULLETCREATOR, pos, vel, 0);
 		m_timer = 0;

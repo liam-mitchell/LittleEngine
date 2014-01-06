@@ -46,6 +46,7 @@ int main() {
 
 		while(currentState == nextState) {
 			Update();
+//			gInputs.Arrow_Up = true;
 
 			if ((previousTime - frameStartTime) > framerate) {
 				Draw();
@@ -58,6 +59,8 @@ int main() {
 				nextState = Quit;
 			if (gInputs.Key_P)
 				GSM_Pause();
+			if (gInputs.Key_Escape)
+				nextState = Menu;
 		}
 
 		Free();
