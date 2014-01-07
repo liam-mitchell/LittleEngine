@@ -59,26 +59,26 @@ typedef struct CONSOLE_FONT
   COORD dimension;
 } CONSOLE_FONT;
 
-//typedef struct _CONSOLE_FONT_INFOEX {
-//  ULONG cbSize;
-//  DWORD nFont;
-//  COORD dwFontSize;
-//  UINT  FontFamily;
-//  UINT  FontWeight;
-//  WCHAR FaceName[LF_FACESIZE];
-//} CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
-//
-//typedef struct _CONSOLE_SCREEN_BUFFER_INFOEX {
-//  ULONG      cbSize;
-//  COORD      dwSize;
-//  COORD      dwCursorPosition;
-//  WORD       wAttributes;
-//  SMALL_RECT srWindow;
-//  COORD      dwMaximumWindowSize;
-//  WORD       wPopupAttributes;
-//  BOOL       bFullscreenSupported;
-//  COLORREF   ColorTable[16];
-//} CONSOLE_SCREEN_BUFFER_INFOEX, *PCONSOLE_SCREEN_BUFFER_INFOEX;
+typedef struct _CONSOLE_FONT_INFOEX {
+  ULONG cbSize;
+  DWORD nFont;
+  COORD dwFontSize;
+  UINT  FontFamily;
+  UINT  FontWeight;
+  WCHAR FaceName[LF_FACESIZE];
+} CONSOLE_FONT_INFOEX, *PCONSOLE_FONT_INFOEX;
+
+typedef struct _CONSOLE_SCREEN_BUFFER_INFOEX {
+  ULONG      cbSize;
+  COORD      dwSize;
+  COORD      dwCursorPosition;
+  WORD       wAttributes;
+  SMALL_RECT srWindow;
+  COORD      dwMaximumWindowSize;
+  WORD       wPopupAttributes;
+  BOOL       bFullscreenSupported;
+  COLORREF   ColorTable[16];
+} CONSOLE_SCREEN_BUFFER_INFOEX, *PCONSOLE_SCREEN_BUFFER_INFOEX;
 
 typedef BOOL (WINAPI *PGetCurrentConsoleFontEx)(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);
 typedef BOOL (WINAPI *PSetCurrentConsoleFontEx)(HANDLE hConsoleOutput, BOOL bMaximumWindow, PCONSOLE_FONT_INFOEX lpConsoleCurrentFontEx);

@@ -17,6 +17,7 @@
 #define ROCKETCREATOR 1005
 #define RTURRETCREATOR 1006
 #define EXITCREATOR 1007
+#define MINECREATOR 1008
 
 class Entity;
 

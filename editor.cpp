@@ -50,6 +50,8 @@ void editorUpdate() {
 		creatorID = RTURRETCREATOR;
 	else if (gInputs.Key_5)
 		creatorID = EXITCREATOR;
+	else if (gInputs.Key_6)
+		creatorID = MINECREATOR;
 
 	vec2d vel(0, 0);
 
@@ -103,6 +105,9 @@ void editorUpdate() {
 				break;
 			case EXITCREATOR:
 				g_Factory.createEntity(creatorID, pos, {0, 0}, Menu);
+				break;
+			case MINECREATOR:
+				g_Factory.createEntity(TILECREATOR, pos, {1, 1}, ENEMY);
 				break;
 			case RTURRETCREATOR:
 				RTurret *pRTurret = static_cast<RTurret *>(g_Factory.createEntity(creatorID, pos, {1, 0}, 0));
@@ -189,11 +194,15 @@ void editorDraw() {
 	pos.setY(17);
 	g_Camera.writeString("    5. Exit             |", pos);
 	pos.setY(18);
-	g_Camera.writeString("                        |", pos);
+	g_Camera.writeString("    6. Mine             |", pos);
 	pos.setY(19);
-	g_Camera.writeString("Move the camera using   |", pos);
+	g_Camera.writeString("                        |", pos);
 	pos.setY(20);
+	g_Camera.writeString("Move the camera using   |", pos);
+	pos.setY(21);
 	g_Camera.writeString("the arrow keys.         |", pos);
+	pos.setY(22);
+	g_Camera.writeString("Press T to play level   |", pos);
 
 	copyBuffer(consoleBuffer, backgroundBuffer);
 	WriteConsoleOutputA(wHnd, consoleBuffer, characterBufferSize, characterPosition, &consoleWriteArea);
